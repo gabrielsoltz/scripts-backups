@@ -13,16 +13,16 @@ SCRIPT_WEB="www.3ops.com"
 ########################################################################################################################
 
 # VARIABLES
-NAME=<Nombre>
-BACKUP=<Path Backup>
-DST_PATH=<Path Destino>
+NAME=
+BACKUP=
+DST_PATH=
 SNAR_BACKUP=BKP-$NAME.snar
 
 # VARIABLES PARA GENERAR RSYNC. (DST_RMT_SERVER=0 LO DESHABILITA)
 DST_RMT_SERVER=0
-DST_RMT_PATH=<Path Destino Remoto>
-DST_RMT_USER=<Username>
-DST_RMT_CERT=<Path a Certificado de Usuario>
+DST_RMT_PATH=
+DST_RMT_USER=
+DST_RMT_CERT=
 
 # OUTPUT FOR: check_nagios_targz_backup.sh (DST_NAGIOS_EXIT_FILE=0 LO DESHABILITA)
 DST_NAGIOS_EXIT_FILE=$DST_PATH
