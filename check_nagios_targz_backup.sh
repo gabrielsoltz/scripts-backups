@@ -20,7 +20,7 @@ NAGIOS_TIME_FILE=$DST_NAGIOS_EXIT_FILE/BKP-$NAME-TIME.exit
 
 # CHECKS
 if [ $(cat $NAGIOS_EXIT_FILE) -eq 0 ]; then
-	if find $NAGIOS_EXIT_FILE -ctime -2 > /dev/null; then
+	if ! find $NAGIOS_EXIT_FILE -ctime -2 > /dev/null; then
 		echo "CRITICAL - NO SE ENCUENTRA BACKUP RECIENTE"
 		exit 2
 	else
