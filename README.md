@@ -13,14 +13,14 @@ Script para generar Backups en Bash con las siguientes funcionalidades:
 Para Ejecutar Backup:
 
 - Configurar las variables dentro del script, las siguientes 3 son necesarias:
-	NAME=<Nombre>
-	BACKUP=<Path Backup>
-	DST_PATH=<Path Destino>
+	- NAME=<Nombre>
+	- BACKUP=<Path Backup>
+	- DST_PATH=<Path Destino>
 
 	Ejemplo:
-	NAME=SITE
-	BACKUP=/var/www/html
-	DST_PATH=/backup
+	 - NAME=SITE
+	 - BACKUP=/var/www/html
+	 - DST_PATH=/backup
 
 ./targz-backup.sh <full> or <incremental>
 	
