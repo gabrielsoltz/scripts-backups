@@ -13,10 +13,10 @@ SCRIPT_WEB="www.3ops.com"
 ########################################################################################################################
 
 # VARIABLES
-NAME=<Nombre>
-DST_NAGIOS_EXIT_FILE=$DST_PATH
-NAGIOS_EXIT_FILE=BKP-$NAME.exit
-NAGIOS_TIME_FILE=BKP-$NAME-TIME.exit
+NAME=
+DST_NAGIOS_EXIT_FILE=
+NAGIOS_EXIT_FILE=BKP-$DST_NAGIOS_EXIT_FILE/$NAME.exit
+NAGIOS_TIME_FILE=BKP-$DST_NAGIOS_EXIT_FILE/$NAME-TIME.exit
 
 # CHECKS
 if [ $(cat $NAGIOS_EXIT_FILE) -eq 0 ]; then
