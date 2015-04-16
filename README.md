@@ -10,3 +10,9 @@ Script para generar Backups en Bash con las siguientes funcionalidades:
 	- Modulo para habilitar RSYNC con otro servidor una vez finalizado el backup
 	- Modulo para generar output para Nagios.
 	
+Para Ejecutar Backup:
+
+- Configurar las variables dentro del script. 
+
+./targz-backup.sh <full> or <incremental>
+	
