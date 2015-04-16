@@ -22,5 +22,5 @@ Para Ejecutar Backup:
 	 - BACKUP=/var/www/html
 	 - DST_PATH=/backup
 
-./targz-backup.sh <full> or <incremental>
+./targz-backup.sh full or incremental
 	
