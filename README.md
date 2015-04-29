@@ -45,4 +45,3 @@ Scripts para generar Backups en Bash:
 
 	 Ejecución:
 	./mysql-backup.sh
-
