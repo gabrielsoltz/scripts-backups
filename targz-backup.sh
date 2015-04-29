@@ -3,12 +3,12 @@
 # TARGZ-BACKUP
 ########################################################################################################################
 SCRIPT_NAME="TARGZ-BACKUP"
-SCRIPT_DESCRIPTION="Backp Script, with tar.gz, rsync, full or incremental mode and nagios output."
+SCRIPT_DESCRIPTION="Backup Script for files, with tar and gz, rsync, full or incremental mode and nagios output."
 SCRIPT_VERSION="1.1"
 SCRIPT_AUTHOR="Gabriel Soltz"
 SCRIPT_CONTACT="thegaby@gmail.com"
 SCRIPT_DATE="20-04-2015"
-SCRIPT_GIT="https://github.com/gabrielsoltz/targz-backup"
+SCRIPT_GIT="https://github.com/gabrielsoltz/scripts-backups"
 SCRIPT_WEB="www.3ops.com"
 ########################################################################################################################
 

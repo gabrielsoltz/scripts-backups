@@ -1,6 +1,8 @@
-# targz-backup
+# scripts-backups
 
-Script para generar Backups en Bash con las siguientes funcionalidades:
+Scripts para generar Backups en Bash:
+
+1. targz-backup.sh:
 
 	- Generación de Backup con TAR y GZ
 	- Escritura de Logging de Todo el proceso
@@ -10,9 +12,7 @@ Script para generar Backups en Bash con las siguientes funcionalidades:
 	- Modulo para habilitar RSYNC con otro servidor una vez finalizado el backup
 	- Modulo para generar output para Nagios.
 	
-Para Ejecutar Backup:
-
-- Configurar las variables dentro del script, las siguientes 3 son necesarias:
+	Variables Necesarias:
 	- NAME=<Nombre>
 	- BACKUP=<Path Backup>
 	- DST_PATH=<Path Destino>
@@ -22,5 +22,27 @@ Para Ejecutar Backup:
 	 - BACKUP=/var/www/html
 	 - DST_PATH=/backup
 
-./targz-backup.sh full or incremental
-	
+	 Ejecución:
+	./targz-backup.sh full or incremental
+
+2. mysql-backup.sh:
+
+	- Dump Mysql
+	- Compresión Gzip
+	- Encriptado con OpenSSL
+	- Modulo para habilitar RSYNC con otro servidor una vez finalizado el backup
+	- Modulo para generar output para Nagios.
+
+	Variables Necesarias:
+	MYSQL_DB=<base de datos>
+	MYSQL_LOGINPATH=<login path de mysql>
+	DST_PATH=<Path Destino>
+
+	Ejemplo:
+	 - MYSQL_DB=prod
+	 - MYSQL_LOGINPATH=backup
+	 - DST_PATH=/backup
+
+	 Ejecución:
+	./mysql-backup.sh
+
