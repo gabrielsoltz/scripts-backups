@@ -4,20 +4,21 @@
 ########################################################################################################################
 SCRIPT_NAME="CHECK_NAGIOS_MYSQL-BACKUP"
 SCRIPT_DESCRIPTION="Nagios Check Script for mysql-backup.sh"
-SCRIPT_VERSION="1.0"
+SCRIPT_VERSION="1.1"
 SCRIPT_AUTHOR="Gabriel Soltz"
 SCRIPT_CONTACT="thegaby@gmail.com"
-SCRIPT_DATE="24-04-2015"
+SCRIPT_DATE="22-03-2016"
 SCRIPT_GIT="https://github.com/gabrielsoltz/scripts-backups"
 SCRIPT_WEB="www.3ops.com"
 ########################################################################################################################
 
 # VARIABLES
-MYSQL_DB=
+MYSQL_DB=dbname
+DST_PATH=/data/backups/$MYSQL_DB
 NAME=MYSQL-$MYSQL_DB
-NAGIOS_DST_EXIT_FILE=
-NAGIOS_EXIT_FILE=$NAGIOS_DST_EXIT_FILE/BKP-$NAME.exit
-NAGIOS_TIME_FILE=$NAGIOS_DST_EXIT_FILE/BKP-$NAME-TIME.exit
+NAGIOS_DST_EXIT_FILE=$DST_PATH
+NAGIOS_EXIT_FILE=BKP-$NAME.exit
+NAGIOS_TIME_FILE=BKP-$NAME-TIME.exit
 
 # CHECKS
 if [[ $(cat $NAGIOS_DST_EXIT_FILE/$NAGIOS_EXIT_FILE) != 0 ]]; then
