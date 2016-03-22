@@ -20,15 +20,15 @@ NAGIOS_EXIT_FILE=$NAGIOS_DST_EXIT_FILE/BKP-$NAME.exit
 NAGIOS_TIME_FILE=$NAGIOS_DST_EXIT_FILE/BKP-$NAME-TIME.exit
 
 # CHECKS
-if [ $(cat $NAGIOS_EXIT_FILE) -ne 0 ]; then
-	echo "CRITICAL - EL BACKUP FALLO: "$(cat $NAGIOS_EXIT_FILE)
-	exit 2
+if [[ $(cat $NAGIOS_DST_EXIT_FILE/$NAGIOS_EXIT_FILE) != 0 ]]; then
+        echo "CRITICAL - EL BACKUP FALLO: "$(cat $NAGIOS_DST_EXIT_FILE/$NAGIOS_EXIT_FILE)
+        exit 2
 else
         if test "`find $NAGIOS_DST_EXIT_FILE/$NAGIOS_EXIT_FILE -mtime +2`"; then
-		echo "CRITICAL - NO SE ENCUENTRA BACKUP RECIENTE"
-		exit 2
-	else
-		echo "OK - BACKUP CORRECTO: "$(cat $NAGIOS_TIME_FILE)
-		exit 0
-	fi
+                echo "CRITICAL - NO SE ENCUENTRA BACKUP RECIENTE"
+                exit 2
+        else
+                echo "OK - BACKUP CORRECTO: "$(cat $NAGIOS_DST_EXIT_FILE/$NAGIOS_TIME_FILE)
+                exit 0
+        fi
 fi
