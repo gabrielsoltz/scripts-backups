@@ -13,7 +13,8 @@ SCRIPT_WEB="www.3ops.com"
 ########################################################################################################################
 
 # VARIABLES
-NAME=
+MYSQL_DB=
+NAME=MYSQL-$MYSQL_DB
 NAGIOS_DST_EXIT_FILE=
 NAGIOS_EXIT_FILE=$NAGIOS_DST_EXIT_FILE/BKP-$NAME.exit
 NAGIOS_TIME_FILE=$NAGIOS_DST_EXIT_FILE/BKP-$NAME-TIME.exit
@@ -23,7 +24,7 @@ if [ $(cat $NAGIOS_EXIT_FILE) -ne 0 ]; then
 	echo "CRITICAL - EL BACKUP FALLO: "$(cat $NAGIOS_EXIT_FILE)
 	exit 2
 else
-	if ! find $NAGIOS_EXIT_FILE -ctime -2 > /dev/null; then
+        if test "`find $NAGIOS_DST_EXIT_FILE/$NAGIOS_EXIT_FILE -mtime +2`"; then
 		echo "CRITICAL - NO SE ENCUENTRA BACKUP RECIENTE"
 		exit 2
 	else
