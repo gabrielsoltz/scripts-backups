@@ -31,9 +31,8 @@ DST_RMT_USER=
 DST_RMT_CERT=
 
 ## LOG
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 DATE=$(date +%m-%d-%Y_%H-%M)Hs
-LOG=$DIR/LOG-BKP-$NAME-$DATE.log
+LOG=$DST_PATH/LOG-BKP-$NAME-$DATE.log
 echo "--------------------------------------------------------" | tee -a $LOG
 echo "SCRIPT: $SCRIPT_NAME" | tee -a $LOG
 echo "VERSION: $SCRIPT_VERSION" | tee -a $LOG
