@@ -18,8 +18,8 @@ BACKUP=
 DST_PATH=
 SNAR_BACKUP=BKP-$NAME.snar
 
-# OUTPUT FOR: check_nagios_targz_backup.sh (DST_NAGIOS_EXIT_FILE=0 LO DESHABILITA)
-DST_NAGIOS_EXIT_FILE=$DST_PATH
+# OUTPUT FOR: check_nagios_targz_backup.sh (NAGIOS_DST_EXIT_FILE=0 LO DESHABILITA)
+NAGIOS_DST_EXIT_FILE=$DST_PATH
 NAGIOS_EXIT_FILE=BKP-$NAME.exit
 NAGIOS_TIME_FILE=BKP-$NAME-TIME.exit
 STARTTIME=$(date +"%s")
@@ -95,14 +95,14 @@ if [ "$TYPE" == "incremental" ]; then
 fi
 
 # NAGIOS
-if [ "$DST_NAGIOS_EXIT_FILE" != "0" ]; then
+if [ "$NAGIOS_DST_EXIT_FILE" != "0" ]; then
 	echo "" | tee -a $LOG
 	echo "NAGIOS EXIT FILE" | tee -a $LOG
 	echo " EXIT CODE: $EC" | tee -a $LOG
-	echo "$EC" > $DST_NAGIOS_EXIT_FILE/$NAGIOS_EXIT_FILE
+	echo "$EC" > $NAGIOS_DST_EXIT_FILE/$NAGIOS_EXIT_FILE
 	ENDTIME=$(date +"%s")
 	diff=$(($ENDTIME-$STARTTIME))
-	echo " TIEMPO DEL PROCESO: $(($diff / 60)) MINUTOS Y $(($diff % 60)) SEGUNDOS." | tee -a $LOG > $DST_NAGIOS_EXIT_FILE/$NAGIOS_TIME_FILE
+	echo " TIEMPO DEL PROCESO: $(($diff / 60)) MINUTOS Y $(($diff % 60)) SEGUNDOS." | tee -a $LOG > $NAGIOS_DST_EXIT_FILE/$NAGIOS_TIME_FILE
 fi
 
 # RSYNC
