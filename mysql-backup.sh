@@ -4,10 +4,10 @@
 ########################################################################################################################
 SCRIPT_NAME="MYSQL-BACKUP"
 SCRIPT_DESCRIPTION="Backup Script for mysql, with gzip, encryption, rsync, loginpath, and nagios output."
-SCRIPT_VERSION="1.0"
+SCRIPT_VERSION="2.0"
 SCRIPT_AUTHOR="Gabriel Soltz"
 SCRIPT_CONTACT="thegaby@gmail.com"
-SCRIPT_DATE="24-04-2015"
+SCRIPT_DATE="22-03-2016"
 SCRIPT_GIT="https://github.com/gabrielsoltz/scripts-backups"
 SCRIPT_WEB="www.3ops.com"
 ########################################################################################################################
@@ -18,11 +18,16 @@ SCRIPT_WEB="www.3ops.com"
 # VARIABLES
 MYSQL_DB=
 MYSQL_LOGINPATH=
-DST_PATH=
 MYSQL_HOST=localhost
+DST_PATH=
 NAME=MYSQL-$MYSQL_DB
 #MYSQL_DUMP_OPTIONS="--set-gtid-purged=OFF"
-ENC_PASSWORD='password'
+
+# CHECK DST PATH
+if [ ! -d $DST_PATH ]; then
+        echo "Creando Directorio: $DST_PATH"
+        mkdir -p $DST_PATH
+fi
 
 # OUTPUT FOR: check_nagios_mysql_backup.sh (DST_NAGIOS_EXIT_FILE=0 LO DESHABILITA)
 NAGIOS_DST_EXIT_FILE=$DST_PATH
@@ -37,20 +42,13 @@ RMT_DST_USER=
 RMT_DST_CERT=
 
 ## LOG
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 DATE=$(date +%m-%d-%Y_%H-%M)Hs
-LOG=$DIR/LOG-BKP-$NAME-$DATE.log
+LOG=$DST_PATH/LOG-BKP-$NAME-$DATE.log
 echo "--------------------------------------------------------" | tee -a $LOG
 echo "SCRIPT: $SCRIPT_NAME" | tee -a $LOG
 echo "VERSION: $SCRIPT_VERSION" | tee -a $LOG
 echo "INICIO: $DATE" | tee -a $LOG
 echo "--------------------------------------------------------" | tee -a $LOG
-
-# CHECK DST PATH
-if [ ! -d $DST_PATH ]; then 
-	echo "Creando Directorio: $DST_PATH" | tee -a $LOG
-	mkdir -p $DST_PATH 2>> $LOG 1>> $LOG
-fi
 
 echo "----------------------------------------------------------" | tee -a $LOG
 echo " Dump de Base de Datos..." | tee -a $LOG
@@ -78,19 +76,25 @@ echo "----------------------------------------------------------" | tee -a $LOG
 echo " Nagios Exit Files..." | tee -a $LOG
 echo "----------------------------------------------------------" | tee -a $LOG
 if [ "$NAGIOS_DST_EXIT_FILE" != "0" ]; then
-	if  [[ "$EC_DUMP" == "0" && "$EC_GZIP" == "0" && "$EC_ENC" == "0" ]]; then
-		echo "0" | tee -a $LOG > $NAGIOS_DST_EXIT_FILE/$NAGIOS_EXIT_FILE
-	else
-		echo "EXIT CODE DUMP: $EC_DUMP" | tee -a $LOG > $NAGIOS_DST_EXIT_FILE/$NAGIOS_EXIT_FILE
-		echo "EXIT CODE GZIP: $EC_GZIP" | tee -a $LOG >> $NAGIOS_DST_EXIT_FILE/$NAGIOS_EXIT_FILE
-		echo "EXIT CODE ENC: $EC_ENC" | tee -a $LOG >> $NAGIOS_DST_EXIT_FILE/$NAGIOS_EXIT_FILE
-	fi
-	NAGIOS_ENDTIME=$(date +"%s")
-	diff=$(($NAGIOS_ENDTIME-$NAGIOS_STARTTIME))
- 	echo " TIEMPO DEL PROCESO: $(($diff / 60)) MINUTOS Y $(($diff % 60)) SEGUNDOS." | tee -a $LOG > $NAGIOS_DST_EXIT_FILE/$NAGIOS_TIME_FILE
+        if  [[ "$EC_DUMP" == "0" && "$EC_GZIP" == "0" && "$EC_ENC" == "0" ]]; then
+                echo "0" | tee -a $LOG > $NAGIOS_DST_EXIT_FILE/$NAGIOS_EXIT_FILE
+        else
+                echo "EXIT CODE DUMP: $EC_DUMP" | tee -a $LOG > $NAGIOS_DST_EXIT_FILE/$NAGIOS_EXIT_FILE
+                echo "EXIT CODE GZIP: $EC_GZIP" | tee -a $LOG >> $NAGIOS_DST_EXIT_FILE/$NAGIOS_EXIT_FILE
+                echo "EXIT CODE ENC: $EC_ENC" | tee -a $LOG >> $NAGIOS_DST_EXIT_FILE/$NAGIOS_EXIT_FILE
+        fi
+        NAGIOS_ENDTIME=$(date +"%s")
+        diff=$(($NAGIOS_ENDTIME-$NAGIOS_STARTTIME))
+        echo " TIEMPO DEL PROCESO: $(($diff / 60)) MINUTOS Y $(($diff % 60)) SEGUNDOS." | tee -a $LOG > $NAGIOS_DST_EXIT_FILE/$NAGIOS_TIME_FILE
 else
-	echo "NAGIOS EXIT FILES: DISABLE." | tee -a $LOG
+        echo "NAGIOS EXIT FILES: DISABLE." | tee -a $LOG
 fi
+
+echo "----------------------------------------------------------" | tee -a $LOG
+echo " CHECK OLD..." | tee -a $LOG
+echo "----------------------------------------------------------" | tee -a $LOG
+OLDDAYS=180
+find $DST_PATH \( -name "*.enc" -or -name "*.log" \) -type f -mtime +$OLDDAYS -exec rm {} \; -exec /bin/echo {} \; 2>> $LOG 1>> $LOG
 
 echo "----------------------------------------------------------" | tee -a $LOG
 echo " RSYNC..." | tee -a $LOG
