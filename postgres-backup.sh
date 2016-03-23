@@ -20,7 +20,6 @@ SCRIPT_WEB="www.3ops.com"
 PG_DB=
 PG_USER=
 PG_HOST=localhost
-sudo export PGPASSWORD=
 DST_PATH=
 NAME=PG-$PG_DB
 #MYSQL_DUMP_OPTIONS="--set-gtid-purged=OFF"
